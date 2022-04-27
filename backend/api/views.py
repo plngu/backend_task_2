@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from offer.models import Offer
-from rest_framework import status
+from rest_framework import filters, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,9 +9,12 @@ from .serializers import OfferSerializer
 
 
 class OfferViewSet(APIView):
-    filter_backends = (DjangoFilterBackend, )
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filterset_fields = ('bank_name', 'term_min', 'term_max', 'rate_min',
                         'rate_max', 'payment_min', 'payment_max', )
+
+    ordering_fields = ('bank_name', 'term_min', 'term_max', 'rate_min',
+                       'rate_max', 'payment_min', 'payment_max', )
 
     def filter_queryset(self, queryset):
         for backend in list(self.filter_backends):
@@ -46,6 +49,7 @@ class OfferViewSet(APIView):
                 serializer_data = []
                 payment_min = int(payment_min)
                 payment_max = int(payment_max)
+
                 if payment_max and payment_min:
                     for elem in serializer.data:
                         if payment_min <= elem['payment'] <= payment_max:

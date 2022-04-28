@@ -149,3 +149,7 @@ dmypy.json
 media/
 sent_emails/
 
+# for test backend 2
+*.yml
+*.sh
+*.md

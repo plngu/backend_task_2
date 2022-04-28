@@ -156,3 +156,4 @@ sent_emails/
 *.lock
 *.toml
 wait-for
+Dockerfile

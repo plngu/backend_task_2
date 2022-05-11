@@ -48,6 +48,7 @@ python3 manage.py runserver
 
 
 ###Примеры запросов
+
 GET, POST - получение списка ипотечных предложений и создание предложения ```http://localhost:8000/api/offer/```
 
 Тело запроса (для POST):

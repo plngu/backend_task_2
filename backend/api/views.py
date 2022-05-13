@@ -47,31 +47,23 @@ class OfferViewSet(APIView):
 
             if any(check_payment_borders):
                 serializer_data = []
-                try:
-                    payment_min = int(payment_min)
-                except TypeError:
-                    pass
-
-                try:
-                    payment_max = int(payment_max)
-                except TypeError:
-                    pass
 
                 if payment_max and payment_min:
                     for elem in serializer.data:
-                        if payment_min <= elem['payment'] <= payment_max:
+                        if (int(payment_min) <= elem['payment']
+                                <= int(payment_max)):
                             serializer_data.append(elem)
                     return Response(serializer_data)
 
                 if payment_max and not payment_min:
                     for elem in serializer.data:
-                        if elem['payment'] <= payment_max:
+                        if elem['payment'] <= int(payment_max):
                             serializer_data.append(elem)
                     return Response(serializer_data)
 
                 if payment_min and not payment_max:
                     for elem in serializer.data:
-                        if payment_min <= elem['payment']:
+                        if int(payment_min) <= elem['payment']:
                             serializer_data.append(elem)
                     return Response(serializer_data)
             else:
